@@ -1,12 +1,6 @@
 <template>
   <v-form @submit.prevent="handleSubmit" class="text-center">
     <v-text-field
-      type="text"
-      label="display name"
-      required
-      v-model="displayname"
-    ></v-text-field>
-    <v-text-field
       type="email"
       required
       label="email"
@@ -19,28 +13,28 @@
       v-model="password"
     ></v-text-field>
     <v-alert v-if="error" border="top" color="warning" class="ma-2">{{ error }}</v-alert>
-    <v-btn type="submit" class="submit-button">Sign up</v-btn>
+    <v-btn type="submit" class="submit-button">Log in</v-btn>
   </v-form>
 </template>
 
 <script>
 import { ref } from "@vue/reactivity";
-import useSignup from "../composables/useSignup";
+import useLogin from '../composables/useLogin'
 
-const { error, signup } = useSignup();
+const {error, login} = useLogin();
 
 export default {
   setup() {
     // refs
-    const displayName = ref("");
     const email = ref("");
     const password = ref("");
 
-    async function handleSubmit() {
-      await signup(email.value, password.value, displayName.value);
+
+    function handleSubmit() {
+      login(email.value, password.value)
     }
 
-    return { error, displayName, email, password, handleSubmit };
+    return { error, email, password, handleSubmit };
   },
 };
 </script>
