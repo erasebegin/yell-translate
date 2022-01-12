@@ -24,7 +24,7 @@ import useLogin from '../composables/useLogin'
 const {error, login} = useLogin();
 
 export default {
-  setup() {
+  setup(props, context) {
     // refs
     const email = ref("");
     const password = ref("");
@@ -32,6 +32,10 @@ export default {
 
     function handleSubmit() {
       login(email.value, password.value)
+
+      if(!error.value){
+        context.emit('login')
+      }
     }
 
     return { error, email, password, handleSubmit };
